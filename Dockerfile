@@ -2,7 +2,7 @@ FROM python:3.12.11-slim-bullseye
 
 RUN apt-get update && \
     apt-get -y --no-install-recommends install cron ffmpeg && \
-    pip install tonie-podcast-sync==3.1.2 && \
+    pip install --root-user-action ignore tonie-podcast-sync==3.1.2 && \
     mkdir -p /root/.toniepodcastsync
 
 WORKDIR /src
