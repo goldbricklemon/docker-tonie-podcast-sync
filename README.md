@@ -1,3 +1,5 @@
+![Docker Image Version](https://img.shields.io/docker/v/goldbricklemon/tonie-podcast-sync?sort=semver&arch=amd64&style=flat&logo=docker&label=Docker%20Hub%20Version&labelColor=383838)
+<br>
 [![Docker Build & Publish](https://github.com/goldbricklemon/docker-tonie-podcast-sync/actions/workflows/docker-release-publish.yml/badge.svg)](https://github.com/goldbricklemon/docker-tonie-podcast-sync/actions/workflows/docker-release-publish.yml)
 
 # docker-tonie-podcast-sync

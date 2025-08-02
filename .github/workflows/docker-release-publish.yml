@@ -1,4 +1,4 @@
-name: Docker Publish on Release
+name: Docker Build
 
 # This workflow usea actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
