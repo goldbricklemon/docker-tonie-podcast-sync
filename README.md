@@ -1,5 +1,5 @@
 # docker-tonie-podcast-sync
-A docker container to sync podcast episodes to Creative Tonies for the [Toniebox](https://tonies.com/en-gb/tonieboxes/).
+A Docker container to sync podcast episodes to Creative Tonies for the [Toniebox](https://tonies.com/en-gb/tonieboxes/).
 
 On DockerHub: https://hub.docker.com/r/goldbricklemon/tonie-podcast-sync
 
@@ -11,10 +11,10 @@ This is a purely private project and has no association with Boxine GmbH.
 
 Truth be told, this container is pretty much a glorified containerized `cron` that periodically calls `tonie-podcast-sync`. Why did I build a container image just for that?
 
-  1. I like docker
-  2. I like to run most of my stuff at home via docker
+  1. I like Docker
+  2. I like to run most of my stuff at home via Docker
   3. I dislike to directly install and/or cron-schedule stuff (or run [services](https://github.com/alexhartm/tonie-podcast-sync/issues/27)) on my host machines, if it does not directly address the host itself (e.g. backups or the like)
-  4. Getting into the intricacies of running cron inside a docker container is a fun weekend read/project.
+  4. Getting into the intricacies of running cron inside a Docker container is a fun weekend read/project.
 
 
 ## Running
@@ -32,7 +32,7 @@ My recommendation: temporarily `pip install tonie-podcast-sync` on your machine 
   L .secrets.toml (optional)
 ```
 
-Transfer those files (or just the entire directory) to your docker host. If you want to change your podcast sync settings later, either re-do those steps or just directly edit the `settings.toml`.
+Transfer those files (or just the entire directory) to your Docker host. If you want to change your podcast sync settings later, either re-do those steps or just directly edit the `settings.toml`.
 
 ### Run Container
 Running the container requires you to specify the cron schedule at which the sync is running via the environment variable `CRON_SCHEDULE`, e.g.:
