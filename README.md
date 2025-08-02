@@ -5,6 +5,8 @@ On DockerHub: https://hub.docker.com/r/goldbricklemon/tonie-podcast-sync
 
 This is a kind-of-minimal container around the [tonie-podcast-sync](https://github.com/alexhartm/tonie-podcast-sync) CLI/Python tool by [alexhartm](https://github.com/alexhartm). It allows you to sync podcast episodes (e.g. the newest ones) to your Creative Tonies on a cron schedule.
 
+This is a purely private project and has no association with Boxine GmbH.
+
 ## Why?
 
 Truth be told, this container is pretty much a glorified containerized `cron` that periodically calls `tonie-podcast-sync`. Why did I build a container image just for that?
