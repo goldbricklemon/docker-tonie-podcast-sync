@@ -1,3 +1,5 @@
+[![Docker Build & Publish](https://github.com/goldbricklemon/docker-tonie-podcast-sync/actions/workflows/docker-release-publish.yml/badge.svg)](https://github.com/goldbricklemon/docker-tonie-podcast-sync/actions/workflows/docker-release-publish.yml)
+
 # docker-tonie-podcast-sync
 A Docker container to sync podcast episodes to Creative Tonies for the [Toniebox](https://tonies.com/en-gb/tonieboxes/).
 
