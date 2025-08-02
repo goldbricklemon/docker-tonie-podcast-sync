@@ -88,10 +88,12 @@ You can obviously use `docker-compose` as well, no surprises there. There is als
 
 
 ## Open TODOs
-
-  * Add automated build/push via GitHub Action on releases
   * Add multi-arch support/build (gotta cover the Raspberry folks out there)
   * Sanity checks on container start-up to ensure correct usage of parameters
   * The container image is currently far too large for what it brings. Options:
     + Offer a non-`ffmpeg` version, or check out `avconv`
     + Migrate to `alpine` (although python applications under `alpine` can be iffy)
+    
+## Builds Upon / Thanks To
+- moritj29's [tonie_api](https://github.com/moritzj29/tonie_api)
+- alexhartm's [tonie-podcast-sync](https://github.com/alexhartm/tonie-podcast-sync)
