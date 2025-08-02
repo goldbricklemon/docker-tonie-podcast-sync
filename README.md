@@ -35,7 +35,7 @@ My recommendation: temporarily `pip install tonie-podcast-sync` on your machine 
 Transfer those files (or just the entire directory) to your docker host. If you want to change your podcast sync settings later, either re-do those steps or just directly edit the `settings.toml`.
 
 ### Run Container
-Running the container requires you to specify the cron schedul at which the sync is running via the environment variable `CRON_SCHEDULE`, e.g.:
+Running the container requires you to specify the cron schedule at which the sync is running via the environment variable `CRON_SCHEDULE`, e.g.:
 
 `docker run [...] --env CRON_SCHEDULE="0 8 * * *" [...]`
 
