@@ -6,9 +6,12 @@ name: Docker Build
 # documentation.
 
 on:
+  workflow_dispatch:
   push:
+    branches:
+      - 'master'
     # Publish semver tags as releases.
-    tags: [ 'v*.*.*' ]
+    tags: [ 'v*.*' ]
 env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: docker.io
@@ -63,7 +66,9 @@ jobs:
           images: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
+
             type=semver,pattern={{version}}
+            type=ref,event=branch,prefix=pre-release-
           
 
       # Build and push Docker image with Buildx (don't push on PR)
