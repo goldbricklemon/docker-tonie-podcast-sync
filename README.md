@@ -60,7 +60,7 @@ goldbricklemon/tonie-podcast-sync:latest
 ```
 
 #### B)
-If you don't want to presist your credentials on your host machine in a `.secrets.toml` file, you can alternatively pass them as environment variables as well. Just make sure to still bind-mound your `settings.toml`, **BUT ONLY THIS FILE, not the entire `.toniepodcastsync` directory**.
+If you don't want to presist your credentials on your host machine in a `.secrets.toml` file, you can alternatively pass them as environment variables as well. Just make sure to still bind-mount your `settings.toml`, **BUT ONLY THIS FILE, not the entire `.toniepodcastsync` directory**.
 
 The minimal `docker run` command would look like this:
 
