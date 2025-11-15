@@ -81,6 +81,10 @@ jobs:
         with:
           images: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          flavor: |
+            latest=auto
+            prefix=
+            suffix=${{ matrix.variant.image_suffix }},onlatest=true
           tags: |
 
             type=semver,pattern={{version}}
@@ -97,7 +101,7 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8,linux/arm/v7
           build-args: ${{ matrix.variant.buildargs }}
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}${{ matrix.variant.image_suffix }}
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
       # Sign the resulting Docker image digest except on PRs.
