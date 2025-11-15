@@ -22,6 +22,17 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        variant:
+          - name: default
+            image_suffix: ""
+            buildargs: ""
+          - name: noffmpeg
+            image_suffix: "-noffmpeg"
+            buildargs: "INCLUDE_FFMPEG=false"
+
     permissions:
       contents: read
       packages: write
@@ -84,8 +95,9 @@ jobs:
         with:
           context: .
           platforms: linux/amd64,linux/arm64/v8,linux/arm/v7
+          build-args: ${{ matrix.variant.buildargs }}
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.meta.outputs.tags }}${{ matrix.variant.image_suffix }}
           labels: ${{ steps.meta.outputs.labels }}
 
       # Sign the resulting Docker image digest except on PRs.

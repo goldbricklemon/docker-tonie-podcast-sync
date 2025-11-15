@@ -15,10 +15,9 @@ This is a purely private project and has no association with Boxine GmbH.
 
 Truth be told, this container is pretty much a glorified containerized `cron` that periodically calls `tonie-podcast-sync`. Why did I build a container image just for that?
 
-  1. I like Docker
-  2. I like to run most of my stuff at home via Docker
-  3. I dislike to directly install and/or cron-schedule stuff (or run [services](https://github.com/alexhartm/tonie-podcast-sync/issues/27)) on my host machines, if it does not directly address the host itself (e.g. backups or the like)
-  4. Getting into the intricacies of running cron inside a Docker container is a fun weekend read/project.
+  1. I like to run most of my stuff at home via Docker
+  2. I dislike to directly install and/or cron-schedule stuff (or run [services](https://github.com/alexhartm/tonie-podcast-sync/issues/27)) on my host machines, if it does not directly address the host itself (e.g. backups or the like)
+  3. Getting into the intricacies of running cron inside a Docker container is a fun weekend read/project.
 
 
 ## Running
@@ -87,11 +86,15 @@ You can obviously use `docker-compose` as well, no surprises there. There is als
 | TONIE_CLOUD_PASSWORD | Tonie Cloud password                    | Only required, if no `.secrets.toml` is passed to the container                                                                           |
 
 
+### Container Variant `-noffmpeg`
+
+The regular container version comes with `ffmpeg` installed, to support the podcast-trimming feature of `tonie-podcast-sync`. This comes at the price of making the container image unreasonably large. Hence, the `-noffmpeg` varaint of the container with no `ffmepg` installed. Just don't use it if you make use of podcast trimming.
+
 ## Open TODOs
   * ~~Add multi-arch support/build (gotta cover the Raspberry folks out there)~~
   * ~~Sanity checks on container start-up to ensure correct usage of parameters~~
   * The container image is currently far too large for what it brings. Options:
-    + Offer a non-`ffmpeg` version, or check out `avconv`
+    + ~~Offer a non-`ffmpeg` version~~
     + Migrate to `alpine` (although python applications under `alpine` can be iffy)
     
 ## Builds Upon / Thanks To
