@@ -59,7 +59,7 @@ goldbricklemon/tonie-podcast-sync:latest
 ```
 
 #### B)
-If you don't want to presist your credentials on your host machine in a `.secrets.toml` file, you can alternatively pass them as environment variables as well. Just make sure to still bind-mount your `settings.toml`, **BUT ONLY THIS FILE, not the entire `.toniepodcastsync` directory**.
+If you don't want to persist your credentials on your host machine in a `.secrets.toml` file, you can alternatively pass them as environment variables as well. Just make sure to still bind-mount your `settings.toml`, **BUT ONLY THIS FILE, not the entire `.toniepodcastsync` directory**.
 
 The minimal `docker run` command would look like this:
 
@@ -96,6 +96,7 @@ The regular container version comes with `ffmpeg` installed, to support the podc
   * The container image is currently far too large for what it brings. Options:
     + ~~Offer a non-`ffmpeg` version~~
     + Migrate to `alpine` (although python applications under `alpine` can be iffy)
+  * Run as non-root user
     
 ## Builds Upon / Thanks To
 - moritj29's [tonie_api](https://github.com/moritzj29/tonie_api)
