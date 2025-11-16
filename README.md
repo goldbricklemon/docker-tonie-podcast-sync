@@ -1,15 +1,15 @@
-[![Docker Image Version](https://img.shields.io/docker/v/goldbricklemon/tonie-podcast-sync?sort=semver&arch=amd64&style=flat&logo=docker&label=Docker%20Hub%20Version&labelColor=383838)](https://hub.docker.com/repository/docker/goldbricklemon/tonie-podcast-sync/general)
+[![Docker Image Version](https://img.shields.io/docker/v/goldbricklemon/tonie-podcast-sync?sort=semver&arch=amd64&style=flat&logo=docker&label=Docker%20Hub%20Version&labelColor=383838)](https://hub.docker.com/r/goldbricklemon/tonie-podcast-sync/tags)
 <br>
-![Docker Pulls](https://img.shields.io/docker/pulls/goldbricklemon/tonie-podcast-sync?logo=docker&label=Docker%20Hub%20Pulls)
+[![Docker Pulls](https://img.shields.io/docker/pulls/goldbricklemon/tonie-podcast-sync?logo=docker&label=Docker%20Hub%20Pulls)](https://hub.docker.com/r/goldbricklemon/tonie-podcast-sync)
 <br>
 [![Docker Build & Publish](https://github.com/goldbricklemon/docker-tonie-podcast-sync/actions/workflows/docker-release-publish.yml/badge.svg)](https://github.com/goldbricklemon/docker-tonie-podcast-sync/actions/workflows/docker-release-publish.yml)
 
 # docker-tonie-podcast-sync
-A Docker container to sync podcast episodes to Creative Tonies for the [Toniebox](https://tonies.com/en-gb/tonieboxes/).
+A Docker container that automatically syncs podcast episodes to Creative Tonies for the [Toniebox](https://tonies.com/en-gb/tonieboxes/).
 
 On DockerHub: https://hub.docker.com/r/goldbricklemon/tonie-podcast-sync
 
-This is a kind-of-minimal container around the [tonie-podcast-sync](https://github.com/alexhartm/tonie-podcast-sync) CLI/Python tool by [alexhartm](https://github.com/alexhartm). It allows you to sync podcast episodes (e.g. the newest ones) to your Creative Tonies on a cron schedule.
+This is a kind-of-minimal image around the [tonie-podcast-sync](https://github.com/alexhartm/tonie-podcast-sync) CLI/Python tool by [alexhartm](https://github.com/alexhartm). It allows you to upload podcast episodes (e.g. the newest ones) to your Creative Tonies on a cron schedule.
 
 This is a purely private project and has no association with Boxine GmbH.
 
@@ -95,7 +95,7 @@ The regular container version comes with `ffmpeg` installed, to support the podc
 ## Open TODOs
   * ~~Add multi-arch support/build (gotta cover the Raspberry folks out there)~~
   * ~~Sanity checks on container start-up to ensure correct usage of parameters~~
-  * The container image is currently far too large for what it brings. Options:
+  * ~~The container image is currently far too large for what it brings. Options:~~
     + ~~Offer a non-`ffmpeg` version~~
     + Migrate to `alpine` (although python applications under `alpine` can be iffy)
   * Run as non-root user
