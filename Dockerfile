@@ -7,7 +7,7 @@ RUN apt-get update && \
         apt-get -y --no-install-recommends install ffmpeg; \
     fi && \
     apt-get -y --no-install-recommends install cron && \
-    pip install --root-user-action ignore tonie-podcast-sync==3.2.1 && \
+    pip install --root-user-action ignore tonie-podcast-sync==3.3.3 && \
     mkdir -p /root/.toniepodcastsync
 
 WORKDIR /src
