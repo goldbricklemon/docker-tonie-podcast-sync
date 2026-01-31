@@ -14,7 +14,7 @@ RUN apt-get update && \
     apt-get -y --no-install-recommends install cron && \
     if [ "$TPS_VERSION" = "main" ]; then \
         apt-get -y --no-install-recommends install git && \
-        git clone --depth 1 https://github.com/goldbricklemon/tonie-podcast-sync.git /tmp/tps && \
+        git clone --depth 1 https://github.com/alexhartm/tonie-podcast-sync.git /tmp/tps && \
         pip install --root-user-action ignore /tmp/tps && \
         rm -rf /tmp/tps; \
     else \
