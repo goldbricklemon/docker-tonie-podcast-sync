@@ -40,7 +40,7 @@ You further need to inject the `settings.toml` as well as your Tonie Cloud crede
 
 #### A)
 I case you want to pass your credentials via the
-`.secrets.toml` file into the contianer, just
+`.secrets.toml` file into the container, just
 bind-mount the complete `.toniepodcastsync` directory. This obviously **requires** the `.secrects.toml` file to be present.
 
 The minimal `docker run` command would look like this:
@@ -98,8 +98,8 @@ Truth be told, this container is pretty much a glorified containerized `cron` th
   * ~~The container image is currently far too large for what it brings. Options:~~
     + ~~Offer a non-`ffmpeg` version~~
     + Migrate to `alpine` (although python applications under `alpine` can be iffy)
-  * Re-work the version/tag system of the docker image to reflect the used version of `tonie-podcast-sync`
-    * Additionally offer a `pre-release` image that is in sync with `main` of `tonie-podcast-sync` to get the most recent changes without a dedicated release
+  * ~~Re-work the version/tag system of the docker image to reflect the used version of `tonie-podcast-sync`~~
+    * ~~Additionally offer a `nightly` image that is in sync with `main` of `tonie-podcast-sync` to get the most recent changes without a dedicated release~~
   * Run as non-root user (will lead to breaking changes, so no priority for now)
     
 ## Builds Upon / Thanks To

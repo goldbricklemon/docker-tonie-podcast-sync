@@ -10,13 +10,16 @@ on:
   push:
     branches:
       - 'main'
-    # Publish semver tags as releases.
-    tags: [ 'v*.*' ]
+    tags:
+      - 'v*.*'
+  schedule:
+    - cron: '0 2 * * *'  # every day at 2:00 UTC
 env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: docker.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: goldbricklemon/tonie-podcast-sync
+  TPS_VERSIONS: '["3.3.2", "3.3.3", "main"]'
 
 jobs:
   build:
@@ -25,6 +28,7 @@ jobs:
 
     strategy:
       matrix:
+        tps_version: [ "3.3.2", "3.3.3", "main" ]
         variant:
           - name: default
             image_suffix: ""
@@ -43,6 +47,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Set latest tps version
+        id: set-latest-tps
+        run: |
+          versions=$(echo '${{ env.TPS_VERSIONS }}' | jq -r '.[]' | grep -v main | sort -V)
+          latest=$(echo "$versions" | tail -n1)
+          echo "LATEST_TPS_VERSION=$latest" >> $GITHUB_ENV
 
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
@@ -73,33 +84,48 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USER }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
-      # Extract metadata (tags, labels) for Docker
-      # https://github.com/docker/metadata-action
+      # Decide on image tags based on event type and TPS version
+      # Build for tps releases on tag pushes (+ latest alias)
+      # Build for tps main on main branch pushes and scheduled runs (nightly)
+      - name: Set image tags
+        id: set-tags
+        run: |
+          if [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" =~ refs/tags/v && "${{ matrix.tps_version }}" != "main" ]]; then
+            TAGS="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.tps_version }}${{ matrix.variant.image_suffix }}"
+            if [[ "${{ matrix.tps_version }}" == "$LATEST_TPS_VERSION" ]]; then
+              TAGS+="\n${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest${{ matrix.variant.image_suffix }}"
+            fi
+            echo -e "TAGS=$TAGS" >> $GITHUB_OUTPUT
+          elif ([[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main" ]] || [[ "${{ github.event_name }}" == "schedule" ]]) && [[ "${{ matrix.tps_version }}" == "main" ]]; then
+            echo "TAGS=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:nightly${{ matrix.variant.image_suffix }}" >> $GITHUB_OUTPUT
+          else
+            echo "TAGS=" >> $GITHUB_OUTPUT
+          fi
+
       - name: Extract Docker metadata
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          flavor: |
-            latest=auto
-            prefix=
-            suffix=${{ matrix.variant.image_suffix }},onlatest=true
-          tags: |
-
-            type=semver,pattern={{version}}
-            type=ref,event=branch,prefix=pre-release-
-          
+          tags: ${{ steps.set-tags.outputs.TAGS }}
+          labels: |
+            org.opencontainers.image.source=${{ github.repositoryUrl }}
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
       - name: Build and push Docker image
         id: build-and-push
+        if: |
+          (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') && matrix.tps_version != 'main') ||
+          ((github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'schedule') && matrix.tps_version == 'main'
         uses: docker/build-push-action@v5
         with:
           context: .
           platforms: linux/amd64,linux/arm64/v8,linux/arm/v7
-          build-args: ${{ matrix.variant.buildargs }}
+          build-args: |
+            TPS_VERSION=${{ matrix.tps_version }}
+            ${{ matrix.variant.buildargs }}
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
