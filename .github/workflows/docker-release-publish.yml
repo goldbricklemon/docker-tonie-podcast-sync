@@ -91,13 +91,13 @@ jobs:
         id: set-tags
         run: |
           if [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" =~ refs/tags/v && "${{ matrix.tps_version }}" != "main" ]]; then
-            TAGS="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.tps_version }}${{ matrix.variant.image_suffix }}"
+            TAGS="${{ matrix.tps_version }}${{ matrix.variant.image_suffix }}"
             if [[ "${{ matrix.tps_version }}" == "$LATEST_TPS_VERSION" ]]; then
-              TAGS+="\n${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest${{ matrix.variant.image_suffix }}"
+              TAGS+="\nlatest${{ matrix.variant.image_suffix }}"
             fi
             echo -e "TAGS=$TAGS" >> $GITHUB_OUTPUT
           elif ([[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main" ]] || [[ "${{ github.event_name }}" == "schedule" ]]) && [[ "${{ matrix.tps_version }}" == "main" ]]; then
-            echo "TAGS=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:nightly${{ matrix.variant.image_suffix }}" >> $GITHUB_OUTPUT
+            echo "TAGS=nightly${{ matrix.variant.image_suffix }}" >> $GITHUB_OUTPUT
           else
             echo "TAGS=" >> $GITHUB_OUTPUT
           fi
