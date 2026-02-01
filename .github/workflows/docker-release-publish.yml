@@ -101,7 +101,7 @@ jobs:
             fi
             echo "DEBUG TAG: $TAG"
             echo "DEBUG LATET_TAG: $LATEST_TAG"
-          elif ([[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main" ]] || [[ "${{ github.event_name }}" == "schedule" ]]) && [[ "${{ matrix.tps_version }}" == "main" ]]; then
+          elif (([[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main" ]] || [[ "${{ github.event_name }}" == "schedule" ]] || [[ "${{ github.event_name }}" == "workflow_dispatch" ]]) && [[ "${{ matrix.tps_version }}" == "main" ]]); then
             TAG="nightly${{ matrix.variant.image_suffix }}"
             LATEST_TAG=""
             LATEST_ENABLED=false
