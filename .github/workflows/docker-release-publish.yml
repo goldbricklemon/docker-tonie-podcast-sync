@@ -122,7 +122,7 @@ jobs:
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=raw,value=${{ steps.set-tags.outputs.TAG }}
-            type=raw,enabled=${{ steps.set-tags.outputs.LATEST_ENABLED }},value=${{ steps.set-tags.outputs.LATEST_TAG }}
+            type=raw,enable=${{ steps.set-tags.outputs.LATEST_ENABLED }},value=${{ steps.set-tags.outputs.LATEST_TAG }}
           labels: |
             org.opencontainers.image.source=${{ github.repositoryUrl }}
 
