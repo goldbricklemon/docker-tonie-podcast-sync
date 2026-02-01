@@ -91,18 +91,28 @@ jobs:
         id: set-tags
         run: |
           if [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" =~ refs/tags/v && "${{ matrix.tps_version }}" != "main" ]]; then
+            TAG="${{ matrix.tps_version }}${{ matrix.variant.image_suffix }}"
             if [[ "${{ matrix.tps_version }}" == "$LATEST_TPS_VERSION" ]]; then
-              TAGS="${{ matrix.tps_version }}${{ matrix.variant.image_suffix }},latest${{ matrix.variant.image_suffix }}"
+              LATEST_TAG="latest${{ matrix.variant.image_suffix }}"
+              LATEST_ENABLED=true
             else
-              TAGS="${{ matrix.tps_version }}${{ matrix.variant.image_suffix }}"
+              LATEST_TAG=""
+              LATEST_ENABLED=false
             fi
-            echo "DEBUG TAGS: $TAGS"
-            echo "TAGS=$TAGS" >> $GITHUB_OUTPUT
+            echo "DEBUG TAG: $TAG"
+            echo "DEBUG LATET_TAG: $LATEST_TAG"
           elif ([[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main" ]] || [[ "${{ github.event_name }}" == "schedule" ]]) && [[ "${{ matrix.tps_version }}" == "main" ]]; then
-            echo "TAGS=nightly${{ matrix.variant.image_suffix }}" >> $GITHUB_OUTPUT
+            TAG="nightly${{ matrix.variant.image_suffix }}"
+            LATEST_TAG=""
+            LATEST_ENABLED=false
           else
-            echo "TAGS=" >> $GITHUB_OUTPUT
+            TAG=""
+            LATEST_TAG=""
+            LATEST_ENABLED=false
           fi
+          echo "TAG=$TAG" >> $GITHUB_OUTPUT
+          echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_OUTPUT
+          echo "LATEST_ENABLED=$LATEST_ENABLED" >> $GITHUB_OUTPUT
 
       - name: Extract Docker metadata
         id: meta
@@ -110,7 +120,9 @@ jobs:
         with:
           images: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: ${{ steps.set-tags.outputs.TAGS }}
+          tags: |
+            type=raw,value=${{ steps.set-tags.outputs.TAG }}
+            type=raw,enabled=${{ steps.set-tags.outputs.LATEST_ENABLED }},value=${{ steps.set-tags.outputs.LATEST_TAG }}
           labels: |
             org.opencontainers.image.source=${{ github.repositoryUrl }}
 
