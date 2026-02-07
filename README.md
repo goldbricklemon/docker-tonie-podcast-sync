@@ -13,6 +13,16 @@ This is a kind-of-minimal image around the [tonie-podcast-sync](https://github.c
 
 This is a purely private project and has no association with Boxine GmbH.
 
+## Image Versions
+
+We currently build and release docker images for the latest  `tonie-podcast-sync` (TPS) releases as well as a nightly image using the current TPS [`main`](https://github.com/alexhartm/tonie-podcast-sync/tree/main) branch:
+
+| Dcker image tag | `tonie-podcast-sync` version |
+| --------------- | ---------------------------- |
+| `:3.3.3`        | `v3.3.3`                     |
+| `:3.3.2`        | `v3.3.2`                     |
+| `:nightly`      | `@main`                      |
+
 
 ## Running
 
@@ -38,7 +48,7 @@ Running the container requires you to specify the cron schedule at which the syn
 
 You further need to inject the `settings.toml` as well as your Tonie Cloud credentials. The container offers two variants to do that.
 
-#### A)
+#### Option A
 I case you want to pass your credentials via the
 `.secrets.toml` file into the container, just
 bind-mount the complete `.toniepodcastsync` directory. This obviously **requires** the `.secrects.toml` file to be present.
@@ -52,7 +62,7 @@ docker run -d \
 goldbricklemon/tonie-podcast-sync:latest
 ```
 
-#### B)
+#### Option B
 If you don't want to persist your credentials on your host machine in a `.secrets.toml` file, you can alternatively pass them as environment variables as well. Just make sure to still bind-mount your `settings.toml`, **BUT ONLY THIS FILE, not the entire `.toniepodcastsync` directory**.
 
 The minimal `docker run` command would look like this:
