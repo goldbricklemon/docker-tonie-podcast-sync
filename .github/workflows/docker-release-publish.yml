@@ -90,6 +90,10 @@ jobs:
       - name: Set image tags
         id: set-tags
         run: |
+          echo "github.event_name: ${{ github.event_name }}"
+          echo "github.ref: ${{ github.ref }}"
+          echo "matrix.tps_version: ${{ matrix.tps_version }}"
+          echo "matrix.variant.image_suffix: ${{ matrix.variant.image_suffix }}"
           if [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" =~ refs/tags/v && "${{ matrix.tps_version }}" != "main" ]]; then
             TAG="${{ matrix.tps_version }}${{ matrix.variant.image_suffix }}"
             if [[ "${{ matrix.tps_version }}" == "$LATEST_TPS_VERSION" ]]; then
@@ -110,6 +114,10 @@ jobs:
             LATEST_TAG=""
             LATEST_ENABLED=false
           fi
+          echo "TAG: $TAG"
+          echo "LATEST_TAG: $LATEST_TAG"
+          echo "LATEST_ENABLED: $LATEST_ENABLED"
+
           echo "TAG=$TAG" >> $GITHUB_OUTPUT
           echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_OUTPUT
           echo "LATEST_ENABLED=$LATEST_ENABLED" >> $GITHUB_OUTPUT
