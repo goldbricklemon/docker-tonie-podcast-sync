@@ -19,7 +19,7 @@ env:
   REGISTRY: docker.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: goldbricklemon/tonie-podcast-sync
-  TPS_VERSIONS: '["3.3.3", "3.3.4", "main"]'
+  TPS_VERSIONS: '["3.3.3", "3.4.0", "main"]'
 
 jobs:
   build:
@@ -28,7 +28,7 @@ jobs:
 
     strategy:
       matrix:
-        tps_version: [ "3.3.3", "3.3.4", "main" ]
+        tps_version: [ "3.3.3", "3.4.0", "main" ]
         variant:
           - name: default
             image_suffix: ""
