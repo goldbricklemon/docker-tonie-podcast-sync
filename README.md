@@ -19,8 +19,8 @@ We currently build and release docker images for the latest  `tonie-podcast-sync
 
 | Dcker image tag | `tonie-podcast-sync` version |
 | --------------- | ---------------------------- |
+| `:3.3.4`        | `v3.3.4`                     |
 | `:3.3.3`        | `v3.3.3`                     |
-| `:3.3.2`        | `v3.3.2`                     |
 | `:nightly`      | `@main`                      |
 
 
