@@ -1,6 +1,8 @@
 FROM python:3.12.11-slim-bullseye
 
+# Default build: install  ffmpeg for podcast trimming
 ARG INCLUDE_FFMPEG=true
+# Specify TPS version from outside via build-arg
 ARG TPS_VERSION
 
 RUN if [ -z "$TPS_VERSION" ]; then \
@@ -24,8 +26,13 @@ RUN apt-get update && \
 
 WORKDIR /src
 
+# Disable soft wraps in log output
+ENV TPS_SOFT_WRAP=false
+
 COPY src/start_schedule.sh .
 RUN chmod +x start_schedule.sh
 
+# Run init script to bring TPS settings and secrets in place and create the cron job
 ENTRYPOINT [ "./start_schedule.sh" ]
+# Start cron as foreground process
 CMD ["cron", "-f"]
