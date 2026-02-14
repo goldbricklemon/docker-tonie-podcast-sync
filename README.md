@@ -17,19 +17,24 @@ This is a purely private project and has no association with Boxine GmbH.
 
 We currently build and release docker images for the latest  `tonie-podcast-sync` (TPS) releases as well as a nightly image using the current TPS [`main`](https://github.com/alexhartm/tonie-podcast-sync/tree/main) branch:
 
-| Dcker image tag | `tonie-podcast-sync` version |
-| --------------- | ---------------------------- |
-| `:3.4.0`        | `v3.4.0`                     |
-| `:3.3.3`        | `v3.3.3`                     |
-| `:nightly`      | `@main`                      |
+| Docker image tag | `tonie-podcast-sync` version |
+| --------------- | --------------------- |
+| [`:3.4.0`](https://hub.docker.com/layers/goldbricklemon/tonie-podcast-sync/3.4.0/images/sha256-982659bde4be9f69674f6a3e5a8431d67ba0e6f313f4a4a70127a83a3a1f98f7) | [`v3.4.0`](https://github.com/alexhartm/tonie-podcast-sync/releases/tag/v.3.4.0) |
+| [`:3.3.3`](https://hub.docker.com/layers/goldbricklemon/tonie-podcast-sync/3.3.3/images/sha256-4c98bb6f92da74f1a266a881c10695f5f376ae367ed276ae7117b5da33d3ee03)        | [`v3.3.3`](https://github.com/alexhartm/tonie-podcast-sync/releases/tag/v.3.3.3) |
+| [`:nightly`](https://hub.docker.com/layers/goldbricklemon/tonie-podcast-sync/nightly/images/sha256-d2627b40f29d23bb01a01ad7305474551d5fbc11d3a6d49a40a8a9973d3036db)      | [`@main`](https://github.com/alexhartm/tonie-podcast-sync/tree/main) |
+
+
+### Image Variant `-noffmpeg`
+
+The regular container version comes with `ffmpeg` installed, to support the podcast-trimming feature of TPS. This comes at the price of making the container image unreasonably large. Hence, the `-noffmpeg` varaint of all images without `ffmepg` installed. Just don't use it if you make use of podcast trimming.
 
 
 ## Running
 
-Running this image requires to setup your `tonie-podcast-sync` settings first and pass them into the container appropriately.
+Running this image requires to setup your TPS settings first and pass them into the container appropriately.
 
 ### Create Settings
-The container is built to run `tonie-podcast-sync` with existing settings (i.e. which podcast(s) to sync to which Creative Tonie). It is not intended to generate those settings using the interactive CLI setup of `tonie-podcast-sync` (although you could technically `exec -it` into the container and run the setup there).
+The container is built to run TPS with existing settings (i.e. which podcast(s) to sync to which Creative Tonie). It is not intended to generate those settings using the interactive CLI setup of TPS (although you could technically `exec -it` into the container and run the setup there).
 
 My recommendation: temporarily `pip install tonie-podcast-sync` on your machine and follow the [setup instructions](https://github.com/alexhartm/tonie-podcast-sync?tab=readme-ov-file#via-cli). This generates the following setting files:
 
@@ -89,10 +94,6 @@ There is also the option `TONIE_CLOUD_SYNC_NOW` to always run a sync on containe
 | TONIE_CLOUD_USERNAME | Tonie Cloud username (e-mail)           | Only required, if no `.secrets.toml` is passed to the container                                                                           |
 | TONIE_CLOUD_PASSWORD | Tonie Cloud password                    | Only required, if no `.secrets.toml` is passed to the container                                                                           |
 
-
-### Container Variant `-noffmpeg`
-
-The regular container version comes with `ffmpeg` installed, to support the podcast-trimming feature of `tonie-podcast-sync`. This comes at the price of making the container image unreasonably large. Hence, the `-noffmpeg` varaint of the container with no `ffmepg` installed. Just don't use it if you make use of podcast trimming.
 
 ## Why a Docker Image?
 
